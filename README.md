@@ -18,7 +18,7 @@
   <a href="https://www.rtk-ai.app">Website</a> &bull;
   <a href="#installation">Install</a> &bull;
   <a href="https://www.rtk-ai.app/guide/troubleshooting">Troubleshooting</a> &bull;
-  <a href="ARCHITECTURE.md">Architecture</a> &bull;
+  <a href="docs/contributing/ARCHITECTURE.md">Architecture</a> &bull;
   <a href="https://discord.gg/RySmvNF5kF">Discord</a>
 </p>
 
@@ -57,37 +57,44 @@ rtk filters and compresses command outputs before they reach your LLM context. S
 
 ## Installation
 
-### Homebrew (recommended)
+> **Homeserve mirror.** This fork (`HomeserveFR/rtk`) is a security-validated mirror of the upstream `rtk-ai/rtk`. Binaries are built from `homeserve/main` for macOS (Intel + Apple Silicon), Linux x86_64 (musl, statically linked), and Windows x86_64.
+
+### Homebrew (recommended for macOS, also works on Linuxbrew)
 
 ```bash
-brew install rtk
+brew tap homeservefr/rtk https://github.com/HomeserveFR/rtk.git
+brew install homeservefr/rtk/rtk
 ```
 
-### Quick Install (Linux/macOS)
+> If you already have `rtk` from `homebrew/core` (upstream), uninstall it first: `brew uninstall rtk`.
+
+### Quick Install (Linux, Windows Git Bash, alternative for macOS)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/HomeserveFR/rtk/refs/heads/homeserve/main/install.sh | sh
 ```
 
 > Installs to `~/.local/bin`. Add to PATH if needed:
 > ```bash
-> echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc  # or ~/.zshrc
+> echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc   # or ~/.bashrc on Linux / Git Bash
 > ```
+> On Windows, this script runs from **Git Bash** (MINGW) and downloads the same `rtk-x86_64-pc-windows-msvc.zip` you would get manually.
 
 ### Cargo
 
 ```bash
-cargo install --git https://github.com/rtk-ai/rtk
+cargo install --git https://github.com/HomeserveFR/rtk
 ```
 
 ### Pre-built Binaries
 
-Download from [releases](https://github.com/rtk-ai/rtk/releases):
-- macOS: `rtk-x86_64-apple-darwin.tar.gz` / `rtk-aarch64-apple-darwin.tar.gz`
-- Linux: `rtk-x86_64-unknown-linux-musl.tar.gz` / `rtk-aarch64-unknown-linux-gnu.tar.gz`
-- Windows: `rtk-x86_64-pc-windows-msvc.zip`
+Download from [releases](https://github.com/HomeserveFR/rtk/releases):
+- macOS Intel: `rtk-x86_64-apple-darwin.tar.gz`
+- macOS Apple Silicon: `rtk-aarch64-apple-darwin.tar.gz`
+- Linux x86_64: `rtk-x86_64-unknown-linux-musl.tar.gz`
+- Windows x86_64: `rtk-x86_64-pc-windows-msvc.zip`
 
-> **Windows users**: Extract the zip and place `rtk.exe` somewhere in your PATH (e.g. `C:\Users\<you>\.local\bin`). Run RTK from **Command Prompt**, **PowerShell**, or **Windows Terminal** — do not double-click the `.exe` (it will flash and close). For the best experience, use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) where the full hook system works natively. See [Windows setup](#windows) below for details.
+> **Windows users**: Extract the zip and place `rtk.exe` somewhere in your `PATH` (e.g. `C:\Users\<you>\.local\bin`). Run from Command Prompt, PowerShell, or Windows Terminal — do not double-click the `.exe`.
 
 ### Verify Installation
 
@@ -110,12 +117,13 @@ rtk init --agent windsurf       # Windsurf
 rtk init --agent cline          # Cline / Roo Code
 rtk init --agent kilocode       # Kilo Code
 rtk init --agent antigravity    # Google Antigravity
+rtk init --agent hermes         # Hermes
 
 # 2. Restart your AI tool, then test
 git status  # Automatically rewritten to rtk git status
 ```
 
-The hook transparently rewrites Bash commands (e.g., `git status` -> `rtk git status`) before execution. Claude never sees the rewrite, it just gets compressed output.
+Hook-based agents rewrite Bash commands (e.g., `git status` -> `rtk git status`) before execution. Plugin-based agents, including Hermes, use their plugin API to rewrite commands before execution. The agent receives compact output without needing to call `rtk` explicitly.
 
 **Important:** the hook only runs on Bash tool calls. Claude Code built-in tools like `Read`, `Grep`, and `Glob` do not pass through the Bash hook, so they are not auto-rewritten. To get RTK's compact output for those workflows, use shell commands (`cat`/`head`/`tail`, `rg`/`grep`, `find`) or call `rtk read`, `rtk grep`, or `rtk find` directly.
 
@@ -350,7 +358,7 @@ rtk git status
 
 ## Supported AI Tools
 
-RTK supports 12 AI coding tools. Each integration transparently rewrites shell commands to `rtk` equivalents for 60-90% token savings.
+RTK supports 13 AI coding tools. Each integration rewrites shell commands to `rtk` equivalents for 60-90% token savings where the agent supports command interception.
 
 | Tool | Install | Method |
 |------|---------|--------|
@@ -364,11 +372,12 @@ RTK supports 12 AI coding tools. Each integration transparently rewrites shell c
 | **Cline / Roo Code** | `rtk init --agent cline` | .clinerules (project-scoped) |
 | **OpenCode** | `rtk init -g --opencode` | Plugin TS (tool.execute.before) |
 | **OpenClaw** | `openclaw plugins install ./openclaw` | Plugin TS (before_tool_call) |
+| **Hermes** | `rtk init --agent hermes` | Python plugin adapter (terminal command mutation via `rtk rewrite`) |
 | **Mistral Vibe** | Planned ([#800](https://github.com/rtk-ai/rtk/issues/800)) | Blocked on upstream |
 | **Kilo Code** | `rtk init --agent kilocode` | .kilocode/rules/rtk-rules.md (project-scoped) |
 | **Google Antigravity** | `rtk init --agent antigravity` | .agents/rules/antigravity-rtk-rules.md (project-scoped) |
 
-For per-agent setup details, override controls, and graceful degradation, see the [Supported Agents guide](https://www.rtk-ai.app/guide/getting-started/supported-agents).
+For per-agent setup details, override controls, and graceful degradation, see the [Supported Agents guide](https://www.rtk-ai.app/guide/getting-started/supported-agents). The Hermes plugin source and tests live in `hooks/hermes/`; installed Hermes runtime files still live under `~/.hermes/plugins/rtk-rewrite/`.
 
 ## Configuration
 
@@ -404,7 +413,7 @@ brew uninstall rtk           # If installed via Homebrew
 
 - **[rtk-ai.app/guide](https://www.rtk-ai.app/guide)** — full user guide (installation, supported agents, what gets optimized, analytics, configuration, troubleshooting)
 - **[INSTALL.md](INSTALL.md)** — detailed installation reference
-- **[ARCHITECTURE.md](ARCHITECTURE.md)** — system design and technical decisions
+- **[ARCHITECTURE.md](docs/contributing/ARCHITECTURE.md)** — system design and technical decisions
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** — contribution guide
 - **[SECURITY.md](SECURITY.md)** — security policy
 
