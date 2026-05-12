@@ -5,6 +5,68 @@ All notable changes to rtk (Rust Token Killer) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.40.0](https://github.com/HomeserveFR/rtk/compare/v0.39.0...v0.40.0) (2026-05-12)
+
+
+### Features
+
+* **cicd:** add auto next release parser ([bf24972](https://github.com/HomeserveFR/rtk/commit/bf24972e7d463f0432b8315e3035e9eb13ff062f))
+* **cicd:** target develop branch ([63da7da](https://github.com/HomeserveFR/rtk/commit/63da7dafd61b5f65115989aeda01f666a64457ff))
+* **gradlew:** add Gradle/gradlew support with streaming filters ([71d285f](https://github.com/HomeserveFR/rtk/commit/71d285fc42d2a97d6d1472bb96fff2db9ab39bab))
+* **gradlew:** Gradle support for Android/Kotlin developers ([833026b](https://github.com/HomeserveFR/rtk/commit/833026b893822be4e1c64d22d640e979cd9eff51))
+* **hermes:** add Hermes Agent support via rtk init --agent hermes ([55f998d](https://github.com/HomeserveFR/rtk/commit/55f998d08cd80ece970fe5e61eaae3533512288b))
+* **hermes:** add rtk integration ([9d3b99d](https://github.com/HomeserveFR/rtk/commit/9d3b99dec8516fd32071d151306b5bb6fd4d06e3))
+* **hooks:** add transparent_prefixes config for wrapper commands ([998f1ee](https://github.com/HomeserveFR/rtk/commit/998f1ee0a3cf8d73ea0d6d87c121117f351e4992))
+* **init:** add --dry-run flag to preview changes without writing ([172ec54](https://github.com/HomeserveFR/rtk/commit/172ec54580ddb0d737ef3e3be8a075eaeeb0a01b))
+
+
+### Bug Fixes
+
+* **cicd:** match ":" for body prefix to catch ([5987333](https://github.com/HomeserveFR/rtk/commit/5987333209cd59c1e22f9e0b247ab390cb431dbf))
+* **cicd:** match allowed repo list in pr bodies ([b1233ab](https://github.com/HomeserveFR/rtk/commit/b1233ab3fbc0927145d5c0f763725b098fc7dd99))
+* **cicd:** pr-target clean msg + git app token ([e4c3ed7](https://github.com/HomeserveFR/rtk/commit/e4c3ed7d889ede726df7986ade94a4714c7c7f99))
+* **cicd:** pr-target clean msg + git app token ([4ebda52](https://github.com/HomeserveFR/rtk/commit/4ebda52f5ab898f9c0e8c610cc51b36a63e6eefa))
+* **cicd:** use GITHUB_TOKEN instead of upstream GitHub App secrets ([dabd168](https://github.com/HomeserveFR/rtk/commit/dabd168c6ab4b32dcd24cf0aff5c06c8f5900685))
+* **cicd:** use GITHUB_TOKEN instead of upstream GitHub App secrets ([b3e1f92](https://github.com/HomeserveFR/rtk/commit/b3e1f920cf4b81306308314a02be86942c560826))
+* correct ARCHITECTURE.md path in README links ([2a41e03](https://github.com/HomeserveFR/rtk/commit/2a41e039903049543aa6c69482747eddcce9ee5a))
+* correct ARCHITECTURE.md path in README links ([f2da381](https://github.com/HomeserveFR/rtk/commit/f2da381ae2353d31dd7252af6c868c56f6aa3db8))
+* **curl:** gate force_tee_hint, extend JSON heuristic, avoid full-body alloc ([2ed53c7](https://github.com/HomeserveFR/rtk/commit/2ed53c7fa26922860af20c445b39cbb66862f180))
+* **curl:** JSON passthrough + IsTerminal gate to prevent invalid JSON output ([02da3d0](https://github.com/HomeserveFR/rtk/commit/02da3d070271f800731a94a3249f3feb9dd7c7b8)), closes [#1536](https://github.com/HomeserveFR/rtk/issues/1536) [#1282](https://github.com/HomeserveFR/rtk/issues/1282)
+* don't inject -json for go test -bench runs ([380a7c9](https://github.com/HomeserveFR/rtk/commit/380a7c9f1189fafe7d0b878b3821a720ac6ab4b2))
+* don't inject -json for go test -bench runs ([b058c96](https://github.com/HomeserveFR/rtk/commit/b058c960f48535227cdec93392a70ee84f3cd2ee)), closes [#1609](https://github.com/HomeserveFR/rtk/issues/1609)
+* dotnet cmd test flakiness ([17ffe62](https://github.com/HomeserveFR/rtk/commit/17ffe624d415f05ca4c29e97ca650594778231be))
+* **dotnet:** 🐛 format build/test/restore output sections ([106305b](https://github.com/HomeserveFR/rtk/commit/106305b1978ad5fdd47139d3543cfa53a5e8172e))
+* **dotnet:** 🐛 format build/test/restore output summaries ([271bc53](https://github.com/HomeserveFR/rtk/commit/271bc53f35c23b39dc42002e8eb3032557f845ec))
+* **dotnet:** 🐛 format warnings section in build/test/restore outputs ([c5245d7](https://github.com/HomeserveFR/rtk/commit/c5245d74fafc066072615d804c27d5c2892db7d9))
+* **dotnet:** move build/test/restore status line to the bottom ([ed161b0](https://github.com/HomeserveFR/rtk/commit/ed161b0a33a2a784bb933792501aa2747b0df3c3)), closes [#1574](https://github.com/HomeserveFR/rtk/issues/1574)
+* **git:** address review feedback on status state surfacing ([316e65e](https://github.com/HomeserveFR/rtk/commit/316e65ef5baa6b926725b8d9a08c8d2ab52c159d))
+* **git:** compact in-progress status state ([cff391e](https://github.com/HomeserveFR/rtk/commit/cff391e50b5fa89ae83eed5fd4274c7c444d37f0))
+* **git:** drop state-hint extraction in compact status ([e91dee5](https://github.com/HomeserveFR/rtk/commit/e91dee568bdcca0933b137edccc077db9ff006fa))
+* **git:** surface in-progress state in compact `rtk git status` ([017d0f9](https://github.com/HomeserveFR/rtk/commit/017d0f9ee6bb799717958d9f3fd3eee4b0e6ca3c))
+* **gradlew:** satisfy semgrep dynamic-command-execution rule ([36ec02d](https://github.com/HomeserveFR/rtk/commit/36ec02d132731dbed41dcf4d124bf957f06695d0))
+* **gradlew:** use resolved_command for system gradle fallback ([9e3a5ae](https://github.com/HomeserveFR/rtk/commit/9e3a5ae68d4adc3d7fc374f36235cb5164e6efc8))
+* **grep:** adjust the command to fall through if the output would already be as small as possible ([09e1c0a](https://github.com/HomeserveFR/rtk/commit/09e1c0ad4b474631b8e058ce69ca2bbd46484c7f))
+* head/tail multi-file rewrite falls back to native command ([#1362](https://github.com/HomeserveFR/rtk/issues/1362)) ([f75a10b](https://github.com/HomeserveFR/rtk/commit/f75a10b1a2bd824814247a03bded76fa49ddf663))
+* **hooks:** address transparent prefix review ([fdf0ed0](https://github.com/HomeserveFR/rtk/commit/fdf0ed0b597f1ebdc96a2793df2725a1e62bc65c))
+* **hooks:** address transparent prefix review comments ([041de2b](https://github.com/HomeserveFR/rtk/commit/041de2b6baa6a27af7d9b429d807fbe887780c90))
+* **hooks:** compose env and transparent prefixes ([b234bc6](https://github.com/HomeserveFR/rtk/commit/b234bc6db1ab301334412409a4cfd67fe99c58f0))
+* **hooks:** make Cursor preToolUse rewrites work and stay visible ([2d6e10a](https://github.com/HomeserveFR/rtk/commit/2d6e10a923d18e022f5fdc4ed9b69ae0d43b2f79))
+* **hooks:** make Cursor preToolUse rewrites work and stay visible ([f00977a](https://github.com/HomeserveFR/rtk/commit/f00977aa338ce6bafe8df69c271679951310b045))
+* **init-uninstall:** uninstall removes --claude-md artifacts on Windows ([d395f97](https://github.com/HomeserveFR/rtk/commit/d395f975c3db7e1cbc825006091e1dcc3867844d))
+* **init-uninstall:** uninstall removes --claude-md artifacts on Windows ([aad0db8](https://github.com/HomeserveFR/rtk/commit/aad0db8b5213bd0940ca05f684ecda87de0d93af))
+* **installer:** support Windows via Git Bash (MINGW/MSYS/Cygwin) ([8801f65](https://github.com/HomeserveFR/rtk/commit/8801f655176a0bdca051e61858572fa9834e9190))
+* **json:** expand char boundary truncation test ([7840030](https://github.com/HomeserveFR/rtk/commit/784003055e85b5e6a51f69c2ce0b10662f1b36af))
+* **json:** use char boundary when truncating long string values ([533894a](https://github.com/HomeserveFR/rtk/commit/533894a77ec5b8f7374547e994124bcf3a730f0b))
+* **ls:** handle all file types (device, pipe, socket) in ls filter ([e456be1](https://github.com/HomeserveFR/rtk/commit/e456be1c1674a32839694446504310a2c16ce7dd))
+* **ls:** handle device files (block, char, pipe, socket) in ls filter ([cac8ce7](https://github.com/HomeserveFR/rtk/commit/cac8ce775b695c5837b36ea788ba6812bcae214d)), closes [#844](https://github.com/HomeserveFR/rtk/issues/844)
+* **ls:** LC_ALL=C + fallback to raw on unrecognized locale ([bf6d4b2](https://github.com/HomeserveFR/rtk/commit/bf6d4b2ea22f026d3ec4d909aef81156b0436509))
+* minor code cleanup, avoid duplicating logic ([20cac8a](https://github.com/HomeserveFR/rtk/commit/20cac8a4e7c2b7e0e2675dbcab4fbd0fb1ad79ed))
+* new rewite_command test call after rebase ([5cfb8e1](https://github.com/HomeserveFR/rtk/commit/5cfb8e1d2bdf85d60633868cb420aba9a7b923f4))
+* **pnpm:** install don't take a list of packages ([492aa76](https://github.com/HomeserveFR/rtk/commit/492aa76ed3842549d2a453becbf2782caba765f1))
+* resolve merge conflict artifacts in init.rs ([4830d50](https://github.com/HomeserveFR/rtk/commit/4830d50f6e3ad7adbd24ba11f3e392869723a020))
+* **stream:** add semgrep flag for sh tests ([7cfcdbe](https://github.com/HomeserveFR/rtk/commit/7cfcdbec8681b15b794b6aef982ccb38feb79fd7))
+* **stream:** add semgrep flag for sh tests ([d327724](https://github.com/HomeserveFR/rtk/commit/d327724f814b6875903366db0b0616780b454ad1))
+
 ## [0.39.0](https://github.com/HomeserveFR/rtk/compare/v0.38.0...v0.39.0) (2026-05-12)
 
 
