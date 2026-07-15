@@ -5,7 +5,7 @@
       "package-name": "rtk",
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": true,
-      "last-release-sha": "dabd168c6ab4b32dcd24cf0aff5c06c8f5900685"
+      "last-release-sha": "5494b86e0f315e1e2c0c4fbd91ccce5c346419a1"
     }
   }
 }
