@@ -16,7 +16,7 @@ jobs:
 
   check-test-presence:
     name: test presence
-    runs-on: ubuntu-latest
+    runs-on: docker
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,7 +28,7 @@ jobs:
 
   fmt:
     name: fmt
-    runs-on: ubuntu-latest
+    runs-on: docker
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -39,7 +39,7 @@ jobs:
   clippy:
     name: clippy
     needs: fmt
-    runs-on: ubuntu-latest
+    runs-on: docker
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -67,7 +67,7 @@ jobs:
   security:
     name: Security Scan
     needs: clippy
-    runs-on: ubuntu-latest
+    runs-on: docker
     steps:
       - uses: actions/checkout@v4
         with:
@@ -188,7 +188,7 @@ jobs:
   semgrep:
     name: semgrep security scan
     needs: clippy
-    runs-on: ubuntu-latest
+    runs-on: docker
     container:
       image: semgrep/semgrep
     steps:
@@ -200,7 +200,7 @@ jobs:
   benchmark:
     name: benchmark
     needs: clippy
-    runs-on: ubuntu-latest
+    runs-on: docker
     steps:
       - uses: actions/checkout@v4
 
@@ -233,7 +233,7 @@ jobs:
   doc-review:
     name: doc review
     if: github.base_ref == 'develop'
-    runs-on: ubuntu-latest
+    runs-on: docker
     steps:
       - uses: actions/checkout@v4
         with:

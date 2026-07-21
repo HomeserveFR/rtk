@@ -94,7 +94,7 @@ jobs:
   release:
     name: Create Release
     needs: [build]
-    runs-on: ubuntu-latest
+    runs-on: docker
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -138,7 +138,7 @@ jobs:
     name: Update Homebrew formula on homeserve/main
     needs: [release]
     if: ${{ !inputs.prerelease }}
-    runs-on: ubuntu-latest
+    runs-on: docker
     permissions:
       contents: write
     steps:
