@@ -129,7 +129,11 @@ install() {
         warn "RTK_SKIP_CHECKSUM=1 set — SKIPPING checksum verification (NOT RECOMMENDED)"
     else
         info "Verifying SHA-256 checksum..."
-        EXPECTED=$(grep "[[:space:]]${ASSET_NAME}\$" "$CHECKSUMS" | awk '{print $1}')
+        # checksums.txt is generated with `sha256sum ./*`, so each entry is
+        # prefixed with "./" (e.g. "<hash>  ./rtk-x86_64-unknown-linux-musl.tar.gz").
+        # Strip that prefix before comparing so the lookup matches regardless
+        # of whether the generator includes it.
+        EXPECTED=$(awk -v name="$ASSET_NAME" '{ file = $2; sub(/^\.\//, "", file); if (file == name) print $1 }' "$CHECKSUMS")
         if [ -z "$EXPECTED" ]; then
             error "checksum for ${ASSET_NAME} not found in checksums.txt — refusing to install"
         fi
