@@ -5,6 +5,14 @@ All notable changes to rtk (Rust Token Killer) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1](https://github.com/HomeserveFR/rtk/compare/v1.0.0...v1.0.1) (2026-07-21)
+
+
+### Bug Fixes
+
+* **install:** tolerate ./ prefix in checksums.txt when matching asset ([cee3db9](https://github.com/HomeserveFR/rtk/commit/cee3db969399ddac9f729b92975d2d76fb728968))
+* **install:** tolerate ./ prefix in checksums.txt when matching asset ([c45b787](https://github.com/HomeserveFR/rtk/commit/c45b78795c968e2278a270dddcbaaeccbab96673))
+
 ## [1.0.0](https://github.com/HomeserveFR/rtk/compare/v0.43.0...v1.0.0) (2026-07-15)
 
 
