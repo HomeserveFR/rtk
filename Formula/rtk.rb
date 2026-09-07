@@ -8,25 +8,25 @@
 class Rtk < Formula
   desc "High-performance CLI proxy to minimize LLM token consumption"
   homepage "https://github.com/HomeserveFR/rtk"
-  version "1.0.0"
+  version "1.0.1"
   license "Apache 2.0"
 
   on_macos do
     on_intel do
       url "https://github.com/HomeserveFR/rtk/releases/download/v#{version}/rtk-x86_64-apple-darwin.tar.gz"
-      sha256 "98b2c6e7e43c24d7bcf9b8624177f49fc25e0a0252e42f4c9a60ea328c60da18"
+      sha256 "1e8aeb72b51949810e1d4831933797e3b154223840d0c86f43c4a12b44550b17"
     end
 
     on_arm do
       url "https://github.com/HomeserveFR/rtk/releases/download/v#{version}/rtk-aarch64-apple-darwin.tar.gz"
-      sha256 "31a092b020da84d1935dc70569e6ad46b0a0e9568947e9aa52c4666b9c2e04f0"
+      sha256 "7fc5ea21cc702704f434c29b403962eb0b0f1f7814ce9a6ef68f605067eb3dfe"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/HomeserveFR/rtk/releases/download/v#{version}/rtk-x86_64-unknown-linux-musl.tar.gz"
-      sha256 "cfbf25c2949bcaff7d8979f1a300fed4199ffeacb3304fa39eb025e40a21f958"
+      sha256 "190501f4c84d765c59c4c6023b210db153b9e9b5befcccc25671ae7b3c127b47"
     end
   end
 
