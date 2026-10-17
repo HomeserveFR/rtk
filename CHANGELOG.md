@@ -5,6 +5,13 @@ All notable changes to rtk (Rust Token Killer) will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0](https://github.com/HomeserveFR/rtk/compare/v1.0.1...v1.1.0) (2026-10-17)
+
+
+### Features
+
+* **SC-3899:** ship rtk built from upstream rtk-ai/rtk v1.0.1 ([5b2bb93](https://github.com/HomeserveFR/rtk/commit/5b2bb934ff760202978da5c94f18d5d9fcf42fd1))
+
 ## [1.0.1](https://github.com/HomeserveFR/rtk/compare/v1.0.0...v1.0.1) (2026-07-21)
 
 
