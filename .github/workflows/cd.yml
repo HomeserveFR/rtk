@@ -21,11 +21,13 @@ jobs:
       release_created: ${{ steps.release.outputs.release_created }}
       tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
+      # Manifest mode: no release-type input, so the action reads
+      # release-please-config.json and .release-please-manifest.json. With a
+      # release-type input it builds its config from the inputs and ignores
+      # the config file entirely (last-release-sha included).
       - uses: googleapis/release-please-action@v4
         id: release
         with:
-          release-type: rust
-          package-name: rtk
           target-branch: homeserve/main
           token: ${{ secrets.GITHUB_TOKEN }}
 
