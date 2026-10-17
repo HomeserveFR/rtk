@@ -77,15 +77,22 @@ jobs:
       - name: Package (Unix)
         if: matrix.os != 'windows-latest'
         run: |
+          # The binary links the BUSL-1.1 rtk-engine, so both texts travel
+          # with every artifact: LICENSE (Apache-2.0, the CLI sources) and
+          # LICENSE-ENGINE (BUSL-1.1, the linked engine).
+          cp LICENSE target/${{ matrix.target }}/release/LICENSE
+          cp engine/LICENSE target/${{ matrix.target }}/release/LICENSE-ENGINE
           cd target/${{ matrix.target }}/release
-          tar -czvf ../../../rtk-${{ matrix.target }}.${{ matrix.archive }} rtk
+          tar -czvf ../../../rtk-${{ matrix.target }}.${{ matrix.archive }} rtk LICENSE LICENSE-ENGINE
           cd ../../..
 
       - name: Package (Windows)
         if: matrix.os == 'windows-latest'
         run: |
+          cp LICENSE target/${{ matrix.target }}/release/LICENSE
+          cp engine/LICENSE target/${{ matrix.target }}/release/LICENSE-ENGINE
           cd target/${{ matrix.target }}/release
-          7z a ../../../rtk-${{ matrix.target }}.${{ matrix.archive }} rtk.exe
+          7z a ../../../rtk-${{ matrix.target }}.${{ matrix.archive }} rtk.exe LICENSE LICENSE-ENGINE
           cd ../../..
 
       - name: Upload artifact
@@ -200,7 +207,7 @@ jobs:
             desc "High-performance CLI proxy to minimize LLM token consumption"
             homepage "https://github.com/HomeserveFR/rtk"
             version "VERSION_PLACEHOLDER"
-            license "Apache 2.0"
+            license all_of: ["Apache-2.0", "BUSL-1.1"]
 
             on_macos do
               on_intel do
