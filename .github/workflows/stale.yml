@@ -16,7 +16,9 @@ permissions: {}
 
 jobs:
   stale:
-    runs-on: ubuntu-latest
+    # Homeserve: upstream-only (needs rtk-ai GitHub App / secrets the mirror does not have).
+    if: github.repository == 'rtk-ai/rtk'
+    runs-on: deployer
     steps:
       - uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         id: app-token

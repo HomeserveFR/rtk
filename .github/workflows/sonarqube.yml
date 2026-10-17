@@ -16,7 +16,9 @@ env:
 jobs:
   sonarqube:
     name: SonarQube Scan
-    runs-on: ubuntu-latest
+    runs-on: docker
+    container:
+      image: europe-west1-docker.pkg.dev/buhsv-global/dockerio/rust:1
     steps:
       - name: Checkout
         uses: actions/checkout@v4
