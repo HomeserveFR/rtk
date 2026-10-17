@@ -55,7 +55,13 @@ unreleased `master`.
    cargo clippy --workspace --all-targets
    cargo doc --no-deps
    cargo test --all
+   cargo audit
    ```
+
+   For each advisory with a semver-compatible fix, update the lockfile only
+   (`cargo update -p <crate>`) in its own `deps(<TICKET>)` commit. A fix that
+   needs a breaking bump of a direct dependency changes upstream code: raise
+   it upstream or in a dedicated PR.
 
 4. Pin release-please past the imported history. In a commit **after** the
    merge commit, set the top-level `last-release-sha` in
@@ -110,6 +116,7 @@ an actor on the ruleset bypass list (organization admin).
 | `Formula/rtk.rb` | Homeserve tap URLs |
 | `README.md` | Installation and "What You Install" sections |
 | `Cargo.toml` | `repository` field |
+| `Cargo.lock` | security patch bumps: take upstream, then redo the `cargo update -p` from `cargo audit` |
 | `sonar-project.properties` | Homeserve only |
 
 ## Versioning
