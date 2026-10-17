@@ -17,9 +17,7 @@ jobs:
 
   check-test-presence:
     name: test presence
-    runs-on: docker
-    container:
-      image: europe-west1-docker.pkg.dev/buhsv-global/dockerio/rust:1
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
         with:
@@ -31,9 +29,7 @@ jobs:
 
   fmt:
     name: fmt
-    runs-on: docker
-    container:
-      image: europe-west1-docker.pkg.dev/buhsv-global/dockerio/rust:1
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
@@ -44,9 +40,7 @@ jobs:
   clippy:
     name: clippy
     needs: fmt
-    runs-on: docker
-    container:
-      image: europe-west1-docker.pkg.dev/buhsv-global/dockerio/rust:1
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
@@ -62,9 +56,7 @@ jobs:
   rustdoc:
     name: rustdoc
     needs: fmt
-    runs-on: docker
-    container:
-      image: europe-west1-docker.pkg.dev/buhsv-global/dockerio/rust:1
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -79,9 +71,7 @@ jobs:
   # `rtk` + `engine`.
   proxy:
     name: proxy (lint + test)
-    runs-on: docker
-    container:
-      image: europe-west1-docker.pkg.dev/buhsv-global/dockerio/rust:1
+    runs-on: ubuntu-latest
     needs: clippy
     steps:
       - uses: actions/checkout@v4
@@ -99,9 +89,7 @@ jobs:
   # `rtk_engine::` call breaks the oss build and nobody notices until a release.
   oss:
     name: oss edition (build + purity)
-    runs-on: docker
-    container:
-      image: europe-west1-docker.pkg.dev/buhsv-global/dockerio/rust:1
+    runs-on: ubuntu-latest
     needs: clippy
     steps:
       - uses: actions/checkout@v4
@@ -128,18 +116,10 @@ jobs:
     name: test (${{ matrix.os }})
     needs: clippy
     runs-on: ${{ matrix.os }}
-    container: ${{ matrix.container }}
     strategy:
       fail-fast: false
       matrix:
-        # Homeserve: Linux runs on the self-hosted docker runner (GitHub-hosted
-        # Linux runners are banned). macOS and Windows stay GitHub-hosted: there
-        # is no self-hosted equivalent and the mirror ships binaries for both.
-        include:
-          - os: docker
-            container: europe-west1-docker.pkg.dev/buhsv-global/dockerio/rust:1
-          - os: windows-latest
-          - os: macos-latest
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@v7
         with:
@@ -153,9 +133,7 @@ jobs:
   security:
     name: Security Scan
     needs: clippy
-    runs-on: docker
-    container:
-      image: europe-west1-docker.pkg.dev/buhsv-global/dockerio/rust:1
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
         with:
@@ -276,9 +254,9 @@ jobs:
   semgrep:
     name: semgrep security scan
     needs: clippy
-    runs-on: docker
+    runs-on: ubuntu-latest
     container:
-      image: europe-west1-docker.pkg.dev/buhsv-global/dockerio/semgrep/semgrep
+      image: semgrep/semgrep
     steps:
       - uses: actions/checkout@v7
         with:
@@ -292,10 +270,7 @@ jobs:
   benchmark:
     name: benchmark
     needs: clippy
-    # Homeserve: upstream-only. Needs sudo/apt, pip and Go on a GitHub-hosted
-    # image; it measures token savings and is not a correctness gate.
-    if: github.repository == 'rtk-ai/rtk'
-    runs-on: docker
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
 
@@ -328,7 +303,7 @@ jobs:
   doc-review:
     name: doc review
     if: github.base_ref == 'develop'
-    runs-on: docker
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
         with:

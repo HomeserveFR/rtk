@@ -103,12 +103,11 @@ an actor on the ruleset bypass list (organization admin).
 
 | File | Homeserve change |
 |---|---|
-| `.github/workflows/ci.yml` | `homeserve/main` in `pull_request.branches`; self-hosted `docker` runner + rust image; `benchmark` guarded to `rtk-ai/rtk` |
-| `.github/workflows/cd.yml` | release-please in manifest mode (no `release-type` input), `GITHUB_TOKEN`, `deployer` runner; no develop pre-release path |
+| `.github/workflows/ci.yml` | `homeserve/main` in `pull_request.branches` |
+| `.github/workflows/cd.yml` | release-please in manifest mode (no `release-type` input), `GITHUB_TOKEN`; no develop pre-release path |
 | `.github/workflows/release.yml` | 4 targets only (macOS x2, Linux musl, Windows), `LICENSE` + `LICENSE-ENGINE` in every archive, formula committed to `homeserve/main` |
 | `.github/workflows/sonarqube.yml` | Homeserve only (not upstream) |
 | `.github/workflows/stale.yml` | job guarded to `rtk-ai/rtk` |
-| `.github/workflows/{next-release,pr-target-check,transparency}.yml` | `deployer` runner |
 | `.github/dependabot.yml` | `target-branch: "homeserve/main"` |
 | `release-please-config.json` | top-level `last-release-sha` |
 | `.release-please-manifest.json`, `CHANGELOG.md` | mirror release line |
@@ -118,6 +117,20 @@ an actor on the ruleset bypass list (organization admin).
 | `Cargo.toml` | `repository` field |
 | `Cargo.lock` | security patch bumps: take upstream, then redo the `cargo update -p` from `cargo audit` |
 | `sonar-project.properties` | Homeserve only |
+
+## Runners: GitHub-hosted on purpose
+
+Homeserve bans GitHub-hosted runners, but this repository is an exception.
+A GitHub fork of a public repository is public, and the org's self-hosted
+runner groups refuse public repositories (`allows_public_repositories:
+false`): a job sent to `docker` or `deployer` stays queued forever. Opening
+a runner group to public repositories is not an option either: a pull request
+from any external fork would run its code on Homeserve infrastructure. Keep
+upstream's `ubuntu-latest` / `macos-latest` / `windows-latest` runners.
+
+Moving to self-hosted runners requires the repository to stop being a public
+fork (detached and made internal), which also puts `install.sh`, the Homebrew
+tap and release downloads behind GitHub authentication.
 
 ## Versioning
 

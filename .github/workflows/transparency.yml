@@ -19,7 +19,7 @@ jobs:
       && contains(github.event.pull_request.labels.*.name, 'next-release')
       && (github.event.action != 'labeled'
           || github.event.label.name == 'next-release')
-    runs-on: deployer
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - name: Start transparency pipeline

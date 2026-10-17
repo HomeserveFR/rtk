@@ -32,7 +32,6 @@ jobs:
   build:
     name: Build ${{ matrix.target }}
     runs-on: ${{ matrix.os }}
-    container: ${{ matrix.container }}
     strategy:
       fail-fast: false
       matrix:
@@ -44,9 +43,7 @@ jobs:
             os: macos-latest
             archive: tar.gz
           - target: x86_64-unknown-linux-musl
-            # Homeserve: self-hosted docker runner, inside a rust image.
-            os: docker
-            container: europe-west1-docker.pkg.dev/buhsv-global/dockerio/rust:1
+            os: ubuntu-latest
             archive: tar.gz
             musl: true
           - target: x86_64-pc-windows-msvc
@@ -65,8 +62,8 @@ jobs:
       - name: Install musl tools
         if: matrix.musl
         run: |
-          apt-get update
-          apt-get install -y musl-tools
+          sudo apt-get update
+          sudo apt-get install -y musl-tools
 
       - name: Build
         run: cargo build --release --target ${{ matrix.target }}
@@ -104,7 +101,7 @@ jobs:
   release:
     name: Create Release
     needs: [build]
-    runs-on: deployer
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -148,7 +145,7 @@ jobs:
     name: Update Homebrew formula on homeserve/main
     needs: [release]
     if: ${{ !inputs.prerelease }}
-    runs-on: deployer
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:

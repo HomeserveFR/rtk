@@ -6,7 +6,7 @@ on:
 
 jobs:
   check-target:
-    runs-on: deployer
+    runs-on: ubuntu-latest
     permissions: {}
     # Skip develop→master PRs (maintainer releases)
     if: >-
