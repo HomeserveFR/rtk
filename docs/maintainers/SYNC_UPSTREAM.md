@@ -106,7 +106,7 @@ an actor on the ruleset bypass list (organization admin).
 | `.github/workflows/ci.yml` | `homeserve/main` in `pull_request.branches` |
 | `.github/workflows/cd.yml` | release-please in manifest mode (no `release-type` input), `GITHUB_TOKEN`; no develop pre-release path |
 | `.github/workflows/release.yml` | 4 targets only (macOS x2, Linux musl, Windows), `LICENSE` + `LICENSE-ENGINE` in every archive, formula committed to `homeserve/main` |
-| `.github/workflows/sonarqube.yml` | Homeserve only (not upstream) |
+| `.github/workflows/sonarqube.yml` | Homeserve only (not upstream); the coverage run skips the two `isolate_rtk_test` cases that llvm-cov instrumentation breaks |
 | `.github/workflows/stale.yml` | job guarded to `rtk-ai/rtk` |
 | `.github/dependabot.yml` | `target-branch: "homeserve/main"` |
 | `release-please-config.json` | top-level `last-release-sha` |
