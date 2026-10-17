@@ -34,8 +34,15 @@ jobs:
       - name: Install cargo-llvm-cov
         uses: taiki-e/install-action@cargo-llvm-cov
 
+      # The two isolation tests assert that a child of an isolated rtk inherits
+      # nothing from this process's environment. Under llvm-cov the instrumented
+      # rtk sets __LLVM_PROFILE_RT_INIT_ONCE itself, which they read as a leak.
+      # They run uninstrumented, and must pass, in ci.yml's test jobs.
       - name: Generate coverage report (LCOV)
-        run: cargo llvm-cov --all-features --workspace --lcov --output-path lcov.info
+        run: >-
+          cargo llvm-cov --all-features --workspace --lcov --output-path lcov.info --no-fail-fast
+          -- --skip a_tool_rtk_runs_inherits_nothing_isolation_drops
+          --skip an_rtk_command_isolated_for_git_keeps_its_data_pinned
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6

@@ -9,7 +9,7 @@ class Rtk < Formula
   desc "High-performance CLI proxy to minimize LLM token consumption"
   homepage "https://github.com/HomeserveFR/rtk"
   version "1.0.1"
-  license "Apache 2.0"
+  license all_of: ["Apache-2.0", "BUSL-1.1"]
 
   on_macos do
     on_intel do
